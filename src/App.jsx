@@ -1,12 +1,12 @@
 import { useState } from "react";
+import Boards from "./Boards";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
-      <h1>Betrayal at house on the hill</h1>
-      <p>React Version</p>
+      <div className="table">
+        <Boards />
+      </div>
     </>
   );
 }
