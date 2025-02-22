@@ -6,7 +6,7 @@ body {
   height: 100vh;
 }
 
-.table {
+.game-table {
   background-color: tan;
   display: flex;
   align-items: center;
