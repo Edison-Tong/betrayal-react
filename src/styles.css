@@ -14,7 +14,6 @@ body {
 }
 
 .board {
-  gap: 1px;
   background-color: rgb(96, 94, 94);
   height: auto;
   width: auto;
@@ -25,7 +24,6 @@ body {
 }
 
 .tile {
-  background-color: black;
   height: 180px;
   width: 180px;
 }
