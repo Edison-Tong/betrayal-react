@@ -8,7 +8,6 @@ export default function Board({ className, tiles = [], size }) {
     <div
       className={className}
       style={{
-        display: "grid",
         gridTemplateRows: `repeat(${rows}, 1fr)`,
         gridTemplateColumns: `repeat(${cols}, 1fr)`,
       }}

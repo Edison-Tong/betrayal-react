@@ -5,7 +5,7 @@ let tilesData = [
     type: "starting",
     floors: { basement: true, ground: false, upper: false },
     doors: ["top", "right", "bottom", "left"],
-    image: "/images/Basement-Landing.png",
+    image: "/images/basement-landing.png",
     row: 3,
     col: 3,
     message: "none",
