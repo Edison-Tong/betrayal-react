@@ -20,6 +20,7 @@ body {
   width: auto;
   margin: 20px;
   padding: 10px;
+  border: 3px solid white;
 }
 
 .board.hidden {
@@ -54,4 +55,37 @@ body {
 .lvl-btn#current {
   background-color: #ccc;
   cursor: default;
+}
+
+.player {
+  background-color: #ff0;
+  border: 2px solid #000;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  font-size: 10px;
+}
+
+.player#p0 {
+  transform: translate(-50px, -50px);
+}
+.player#p1 {
+  transform: translate(0px, -50px);
+}
+.player#p2 {
+  transform: translate(50px, -50px);
+}
+.player#p3 {
+  transform: translate(-50px, 50px);
+}
+.player#p4 {
+  transform: translate(0px, 50px);
+}
+.player#p5 {
+  transform: translate(50px, 50px);
 }
