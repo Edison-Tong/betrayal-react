@@ -6,10 +6,9 @@ export default function Tile({ data }) {
       style={{
         backgroundImage: `url(${data.image})`,
         backgroundSize: "cover",
-        backgroundPosition: "center",
+        gridRow: data.row,
+        gridColumn: data.col,
       }}
-    >
-      {data.name}
-    </div>
+    ></div>
   );
 }

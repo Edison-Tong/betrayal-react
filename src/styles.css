@@ -19,8 +19,6 @@ body {
   width: auto;
   margin: 20px;
   padding: 10px;
-  /* grid-template-rows: repeat(5, 1fr);
-  grid-template-columns: repeat(5, 1fr); */
 }
 
 .tile {
