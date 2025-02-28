@@ -1,5 +1,5 @@
 import React from "react";
 
 export default function Players() {
-  return <div></div>;
+  return <div className="player"></div>;
 }

@@ -1,4 +1,4 @@
-export default function Tile({ data }) {
+export default function Tile({ data, players }) {
   return (
     <div
       className={`tile ${data.id}`}
@@ -9,6 +9,12 @@ export default function Tile({ data }) {
         gridRow: data.row,
         gridColumn: data.col,
       }}
-    ></div>
+    >
+      {players.map((player) => (
+        <div key={player.id} className="player">
+          {player.id}
+        </div>
+      ))}
+    </div>
   );
 }

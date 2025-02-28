@@ -4,22 +4,30 @@ import Board from "./Board";
 export default function Game() {
   const [activeBoard, setActiveBoard] = useState("ground");
 
+  const [players, setPlayers] = useState([
+    { id: 1, tileId: "entrance-hall" },
+    { id: 2, tileId: "hallway" },
+  ]);
+
   return (
     <div className="game-table">
       <Board
         className={`board basement ${activeBoard !== "basement" ? "hidden" : ""}`}
         size={[5, 5]}
         tiles={["basement-landing"]}
+        players={players}
       />
       <Board
         className={`board ground ${activeBoard !== "ground" ? "hidden" : ""}`}
         size={[5, 5]}
         tiles={["entrance-hall", "hallway", "ground-floor-staircase"]}
+        players={players}
       />
       <Board
         className={`board upper ${activeBoard !== "upper" ? "hidden" : ""}`}
         size={[5, 5]}
         tiles={["upper-landing"]}
+        players={players}
       />
 
       <div className="board-buttons">
