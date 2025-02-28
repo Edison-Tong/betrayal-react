@@ -71,21 +71,21 @@ body {
   font-size: 10px;
 }
 
-.player#p0 {
-  transform: translate(-50px, -50px);
+.player:nth-child(1) {
+  transform: translate(-50px, 20px);
 }
-.player#p1 {
-  transform: translate(0px, -50px);
+.player:nth-child(2) {
+  transform: translate(0px, -23px);
 }
-.player#p2 {
-  transform: translate(50px, -50px);
+.player:nth-child(3) {
+  transform: translate(50px, -66px);
 }
-.player#p3 {
-  transform: translate(-50px, 50px);
+.player:nth-child(4) {
+  transform: translate(-50px, -23px);
 }
-.player#p4 {
-  transform: translate(0px, 50px);
+.player:nth-child(5) {
+  transform: translate(0px, -66px);
 }
-.player#p5 {
-  transform: translate(50px, 50px);
+.player:nth-child(6) {
+  transform: translate(50px, -109px);
 }

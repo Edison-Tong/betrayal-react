@@ -1,3 +1,5 @@
+import Player from "./Player";
+
 export default function Tile({ data, players }) {
   return (
     <div
@@ -11,9 +13,7 @@ export default function Tile({ data, players }) {
       }}
     >
       {players.map((player) => (
-        <div key={player.id} className="player">
-          {player.id}
-        </div>
+        <Player key={player.id} player={player} />
       ))}
     </div>
   );

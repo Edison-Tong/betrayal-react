@@ -6,7 +6,11 @@ export default function Game() {
 
   const [players, setPlayers] = useState([
     { id: 1, tileId: "entrance-hall" },
-    { id: 2, tileId: "hallway" },
+    { id: 2, tileId: "entrance-hall" },
+    { id: 3, tileId: "entrance-hall" },
+    { id: 4, tileId: "entrance-hall" },
+    { id: 5, tileId: "entrance-hall" },
+    { id: 6, tileId: "entrance-hall" },
   ]);
 
   return (
