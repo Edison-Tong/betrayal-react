@@ -16,32 +16,41 @@ export default function Game() {
   return (
     <div className="game-table">
       <Board
-        className={`board basement ${activeBoard !== "basement" ? "hidden" : ""}`}
-        size={[5, 5]}
-        tiles={["basement-landing"]}
+        className={`board upper ${activeBoard !== "upper" ? "hidden" : ""}`}
+        tiles={["upper-landing"]}
         players={players}
       />
       <Board
         className={`board ground ${activeBoard !== "ground" ? "hidden" : ""}`}
-        size={[5, 5]}
         tiles={["entrance-hall", "hallway", "ground-floor-staircase"]}
         players={players}
       />
       <Board
-        className={`board upper ${activeBoard !== "upper" ? "hidden" : ""}`}
-        size={[5, 5]}
-        tiles={["upper-landing"]}
+        className={`board basement ${activeBoard !== "basement" ? "hidden" : ""}`}
+        tiles={["basement-landing"]}
         players={players}
       />
 
       <div className="board-buttons">
-        <button className="lvl-btn" onClick={() => setActiveBoard("upper")}>
+        <button
+          className="lvl-btn"
+          id={`${activeBoard === "upper" ? "current" : ""}`}
+          onClick={() => setActiveBoard("upper")}
+        >
           Upper
         </button>
-        <button className="lvl-btn" onClick={() => setActiveBoard("ground")}>
+        <button
+          className="lvl-btn"
+          id={`${activeBoard === "ground" ? "current" : ""}`}
+          onClick={() => setActiveBoard("ground")}
+        >
           Ground
         </button>
-        <button className="lvl-btn" onClick={() => setActiveBoard("basement")}>
+        <button
+          className="lvl-btn"
+          id={`${activeBoard === "basement" ? "current" : ""}`}
+          onClick={() => setActiveBoard("basement")}
+        >
           Basement
         </button>
       </div>
