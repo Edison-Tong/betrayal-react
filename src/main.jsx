@@ -4,7 +4,7 @@ import Game from "./Game.jsx";
 import "./styles.css";
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <Game />
-  </StrictMode>
+  // <StrictMode>
+  <Game />
+  // </StrictMode>
 );

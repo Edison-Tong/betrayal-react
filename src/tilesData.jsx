@@ -8,6 +8,7 @@ let tilesData = [
     image: "/images/basement-landing.png",
     row: 3,
     col: 3,
+    level: "basement",
     message: "none",
   },
   {
@@ -19,6 +20,7 @@ let tilesData = [
     image: "/images/entrance-hall.png",
     row: 4,
     col: 3,
+    level: "ground",
     message: "none",
   },
   {
@@ -30,6 +32,7 @@ let tilesData = [
     image: "/images/hallway.png",
     row: 3,
     col: 3,
+    level: "ground",
     message: `Leads to the Secret Stairs`,
   },
   {
@@ -41,6 +44,7 @@ let tilesData = [
     image: "/images/ground-floor-staircase.png",
     row: 2,
     col: 3,
+    level: "ground",
     message: `Leads to the Upper Landing`,
   },
   {
@@ -52,6 +56,7 @@ let tilesData = [
     image: "/images/upper-landing.png",
     row: 3,
     col: 3,
+    level: "upper",
     message: `Leads to the Ground Floor Staircase`,
   },
   {
