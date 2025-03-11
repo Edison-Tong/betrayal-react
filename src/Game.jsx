@@ -55,7 +55,9 @@ export default function Game() {
           if (existingTile) {
             newPlayer.tileId = existingTile.id;
           } else {
-            getNewTile(newPlayer);
+            if (getNewTile(newPlayer) === false) {
+              return player;
+            }
           }
           return newPlayer; // Return updated player
         })
@@ -73,6 +75,7 @@ export default function Game() {
     const availableTiles = tilesData.filter((tile) => {
       return tile.row === undefined && tile.floors[activePlayer.level] === true;
     });
+    if (availableTiles.length === 0) return false;
     const index = Math.floor(Math.random() * availableTiles.length);
     availableTiles[index].row = player.row;
     availableTiles[index].col = player.col;
