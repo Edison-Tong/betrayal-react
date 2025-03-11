@@ -4,6 +4,11 @@ import tilesData from "./tilesData";
 
 export default function Game() {
   const [activeBoard, setActiveBoard] = useState("ground");
+  const [tiles, setTiles] = useState({
+    upper: ["upper-landing"],
+    ground: ["entrance-hall", "hallway", "ground-floor-staircase"],
+    basement: ["basement-landing"],
+  });
 
   const [players, setPlayers] = useState([
     { id: 1, tileId: "entrance-hall", level: "ground", row: 4, col: 3 },
@@ -49,11 +54,10 @@ export default function Game() {
 
           if (existingTile) {
             newPlayer.tileId = existingTile.id;
-            return newPlayer; // Return updated player
           } else {
-            alert("Invalid move");
-            return player; // Keep player at original position
+            getNewTile(newPlayer);
           }
+          return newPlayer; // Return updated player
         })
       );
     }
@@ -65,21 +69,36 @@ export default function Game() {
     };
   }, [activePlayer]);
 
+  function getNewTile(player) {
+    const availableTiles = tilesData.filter((tile) => {
+      return tile.row === undefined && tile.floors[activePlayer.level] === true;
+    });
+    const index = Math.floor(Math.random() * availableTiles.length);
+    availableTiles[index].row = player.row;
+    availableTiles[index].col = player.col;
+    availableTiles[index].level = player.level;
+    player.tileId = availableTiles[index].id;
+    setTiles((prevTiles) => ({
+      ...prevTiles,
+      [player.level]: [...prevTiles[player.level], availableTiles[index].id],
+    }));
+  }
+
   return (
     <div className="game-table">
       <Board
         className={`board upper ${activeBoard !== "upper" ? "hidden" : ""}`}
-        tiles={["upper-landing"]}
+        tiles={tiles.upper}
         players={players}
       />
       <Board
         className={`board ground ${activeBoard !== "ground" ? "hidden" : ""}`}
-        tiles={["entrance-hall", "hallway", "ground-floor-staircase"]}
+        tiles={tiles.ground}
         players={players}
       />
       <Board
         className={`board basement ${activeBoard !== "basement" ? "hidden" : ""}`}
-        tiles={["basement-landing"]}
+        tiles={tiles.basement}
         players={players}
       />
 
