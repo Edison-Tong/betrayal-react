@@ -1,7 +1,7 @@
 import Tile from "./Tiles";
 import tilesData from "./tilesData";
 
-export default function Board({ className, tiles = [], players }) {
+export default function Board({ className, tiles = [], players, tileRefs }) {
   return (
     <div
       className={className}
@@ -14,7 +14,7 @@ export default function Board({ className, tiles = [], players }) {
         const tileData = tilesData.find((tile) => tile.id === tileId);
         const playerData = players.filter((player) => player.tileId === tileId);
 
-        return <Tile key={index} data={tileData} players={playerData} />;
+        return <Tile key={index} data={tileData} players={playerData} tileRefs={tileRefs} />;
       })}
     </div>
   );

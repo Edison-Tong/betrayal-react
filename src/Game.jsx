@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Board from "./Board";
 import tilesData from "./tilesData";
 
 export default function Game() {
+  const isRotating = useRef(false);
   const [activeBoard, setActiveBoard] = useState("ground");
 
   const [tiles, setTiles] = useState({
@@ -10,6 +11,7 @@ export default function Game() {
     ground: ["entrance-hall", "hallway", "ground-floor-staircase"],
     basement: ["basement-landing"],
   });
+  const tileRefs = useRef({});
 
   let [players, setPlayers] = useState([
     { id: 1, tileId: "entrance-hall", level: "ground", row: 4, column: 3, active: true },
@@ -45,6 +47,7 @@ export default function Game() {
   }, []);
 
   async function handlePlayerMove(direction) {
+    if (isRotating.current) return;
     setPlayers((prevPlayers) =>
       prevPlayers.map((player) =>
         player.active
@@ -68,23 +71,6 @@ export default function Game() {
     );
   }
 
-  // useEffect(() => {
-  //   getPlayersTile();
-  // }, [players]);
-
-  // function getPlayersTile() {
-  //   const activePlayer = players.find((player) => player.active);
-  //   const row = activePlayer.row;
-  //   const column = activePlayer.column;
-  //   const level = activePlayer.level;
-  //   const existingTile = tilesData.find((tile) => tile.row === row && tile.col === column && tile.floors[level]);
-  //   console.log(existingTile);
-
-  //   setPlayers((prevPlayers) => {
-  //     return prevPlayers.map((player) => (player.active ? { ...player, tileId: existingTile.id } : player));
-  //   });
-  // }
-
   useEffect(() => {
     setPlayers((prevPlayers) => {
       return prevPlayers.map((player) => {
@@ -104,8 +90,7 @@ export default function Game() {
     });
   }, [players.map((p) => `${p.row},${p.column}`).join(",")]); // Depend on player positions only
 
-  function getNewTile(player) {
-    console.log(player);
+  async function getNewTile(player) {
     const availableTiles = tilesData.filter((tile) => {
       return tile.row === undefined && tile.floors[player.level] === true;
     });
@@ -119,6 +104,46 @@ export default function Game() {
       ...prevTiles,
       [player.level]: [...prevTiles[player.level], availableTiles[index].id],
     }));
+    setTimeout(() => {
+      handleRotateTile(availableTiles[index].id);
+    }, 1);
+  }
+
+  function handleRotateTile(tileName) {
+    let tile = tileRefs.current[tileName];
+    tile.classList.add("highlight");
+    console.log(tile);
+    return new Promise((resolve) => {
+      resolve();
+      isRotating.current = true;
+      let currentRotation = 0;
+
+      // Function to rotate the tile
+      function rotateTile(event) {
+        if (event.key === "ArrowLeft") {
+          currentRotation = (currentRotation - 90) % 360; // Rotate counterclockwise
+          tile.style.transform = `rotate(${currentRotation}deg)`;
+          updateDoors("left");
+        } else if (event.key === "ArrowRight") {
+          currentRotation = (currentRotation + 90) % 360; // Rotate clockwise
+          tile.style.transform = `rotate(${currentRotation}deg)`;
+          updateDoors("right");
+        } else if (event.key === "Enter") {
+          // Finalize rotation
+          // if (!checkDoorAlignment()) {
+          //   return;
+          // }
+          document.removeEventListener("keydown", rotateTile); // Remove the event listener
+          isRotating.current = false; // Reset the flag to resume actions
+          tile.classList.remove("highlight");
+          resolve(); // Resolve the promise to indicate the rotation is done
+          endTurnBtn.addEventListener("click", handleEndOfTurn);
+        }
+      }
+
+      // Add event listener to listen for key presses
+      document.addEventListener("keydown", rotateTile);
+    });
   }
 
   return (
@@ -127,16 +152,19 @@ export default function Game() {
         className={`board upper ${activeBoard !== "upper" ? "hidden" : ""}`}
         tiles={tiles.upper}
         players={players}
+        tileRefs={tileRefs}
       />
       <Board
         className={`board ground ${activeBoard !== "ground" ? "hidden" : ""}`}
         tiles={tiles.ground}
         players={players}
+        tileRefs={tileRefs}
       />
       <Board
         className={`board basement ${activeBoard !== "basement" ? "hidden" : ""}`}
         tiles={tiles.basement}
         players={players}
+        tileRefs={tileRefs}
       />
 
       <div className="board-buttons">

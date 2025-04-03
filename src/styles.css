@@ -32,6 +32,14 @@ body {
 .tile {
   height: 180px;
   width: 180px;
+  box-sizing: border-box;
+}
+
+.tile.highlight {
+  border: 3px solid yellow;
+  box-shadow: 0 0 10px 5px rgba(255, 255, 0, 0.8);
+  z-index: 10; /* Ensure it appears above other elements */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .board-buttons {

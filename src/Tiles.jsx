@@ -1,9 +1,13 @@
 import Player from "./Player";
 
-export default function Tiles({ data, players }) {
+export default function Tiles({ data, players, tileRefs }) {
   return (
     <div
       className="tile"
+      id={`${data.id}`}
+      ref={(el) => {
+        tileRefs.current[data.id] = el;
+      }}
       style={{
         backgroundImage: `url(${data.image})`,
         backgroundSize: "cover",
