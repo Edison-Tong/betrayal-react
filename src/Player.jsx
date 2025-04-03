@@ -1,3 +1,7 @@
 export default function Player({ player }) {
-  return <div className="player">{player.id}</div>;
+  return (
+    <div className="player" id={`p${player.id}`}>
+      {player.id}
+    </div>
+  );
 }

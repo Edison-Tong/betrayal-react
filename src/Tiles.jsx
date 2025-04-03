@@ -15,9 +15,11 @@ export default function Tiles({ data, players, tileRefs }) {
         gridColumn: data.col,
       }}
     >
-      {players.map((player) => (
-        <Player key={player.id} player={player} />
-      ))}
+      <div className="player-container">
+        {players.map((player) => (
+          <Player key={player.id} player={player} />
+        ))}
+      </div>
     </div>
   );
 }
