@@ -34,6 +34,7 @@ let tilesData = [
     col: 3,
     level: "ground",
     message: `Leads to the Secret Stairs`,
+    leadsTo: "secret-staircase",
   },
   {
     id: "ground-floor-staircase",
@@ -46,6 +47,7 @@ let tilesData = [
     col: 3,
     level: "ground",
     message: `Leads to the Upper Landing`,
+    leadsTo: "upper-landing",
   },
   {
     id: "upper-landing",
@@ -58,6 +60,7 @@ let tilesData = [
     col: 3,
     level: "upper",
     message: `Leads to the Ground Floor Staircase`,
+    leadsTo: "ground-floor-staircase",
   },
   {
     id: "armory",
@@ -142,6 +145,7 @@ let tilesData = [
     message: `If you end your tur on this tile, make a speed roll. <br>
                             5+: Nothing happens. <br>
                             4-0: Place your explorer on the Basement Landing and take one die of Physical damage`,
+    leadsTo: "basement-landing",
   },
   {
     id: "conservatory",
@@ -202,6 +206,7 @@ let tilesData = [
     image: "/images/gallery.png",
     symbol: "event",
     message: `Leads to Ballroom`,
+    leadsTo: "ballroom",
   },
   {
     id: "game-room",
@@ -222,6 +227,7 @@ let tilesData = [
     image: "/images/graveyard.png",
     symbol: "omen",
     message: `Leads to the Underground Cavern`,
+    leadsTo: "underground-cavern",
   },
   {
     id: "guest-quarters",
@@ -409,6 +415,7 @@ let tilesData = [
     image: "/images/secret-staircase.png",
     symbol: "none",
     message: `Leads to the Hallway`,
+    leadsTo: "hallway",
   },
   {
     id: "soundproofed-room",
@@ -459,6 +466,7 @@ let tilesData = [
     image: "/images/underground-cavern.png",
     symbol: "event",
     message: `Leads to the Graveyard`,
+    leadsTo: "graveyard",
   },
   {
     id: "underground-lake",
