@@ -28,6 +28,7 @@ export default function Game() {
     const getDirection = (event) => {
       let newRow = players[activePlayerIndex].row;
       let newColumn = players[activePlayerIndex].column;
+      let tile = tilesData.find((tile) => tile.id === players[activePlayerIndex].tileId);
       switch (event.key) {
         case "ArrowUp":
           newRow--;
@@ -45,6 +46,8 @@ export default function Game() {
           newColumn++;
           handlePlayerMove(newColumn, "right");
           break;
+        case "Enter":
+          teleportToNewTile(tile);
         default:
           break;
       }
@@ -87,6 +90,27 @@ export default function Game() {
       });
     });
   }
+
+  function teleportToNewTile(currentTile) {
+    if (!currentTile.leadsTo) return;
+    const newTile = tilesData.find((tile) => tile.id === currentTile.leadsTo);
+    if (newTile.row) {
+      setPlayers((prev) => {
+        return prev.map((player, index) => {
+          if (index === activePlayerIndex) {
+            return {
+              ...player,
+              tileId: newTile.id,
+              row: newTile.row,
+              column: newTile.col,
+            };
+          }
+          return player;
+        });
+      });
+    }
+  }
+
   function checkForDoor(direction) {
     const doors = tilesData.find((tile) => tile.id === playerRefs.current[activePlayerIndex].tileId).doors;
     return doors.includes(direction);
@@ -101,7 +125,6 @@ export default function Game() {
         const tileId = await getNewTile(row, column, floor);
         resolve(tileId);
       } else {
-        console.log(checkDoorAlignment(existingTile.id, direction));
         if (checkDoorAlignment(existingTile.id, direction) === false) resolve(false);
         resolve(existingTile.id);
       }
