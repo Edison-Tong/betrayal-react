@@ -25,6 +25,14 @@ export default function Game() {
   let [activePlayerIndex, setActivePlayerIndex] = useState(0);
 
   useEffect(() => {
+    function test() {
+      if (event.key === "q") console.log(players[activePlayerIndex]);
+    }
+    window.addEventListener("keydown", test);
+    return () => window.removeEventListener("keydown", test);
+  });
+
+  useEffect(() => {
     const getDirection = (event) => {
       let newRow = players[activePlayerIndex].row;
       let newColumn = players[activePlayerIndex].column;
@@ -57,14 +65,19 @@ export default function Game() {
     return () => window.removeEventListener("keydown", getDirection);
   });
 
-  async function handlePlayerMove(newPlace, direction) {
+  async function handlePlayerMove(newPlace, direction, level) {
     if (isRotating.current) return;
     if (newPlace === 0 || newPlace === 6) return;
-    if (checkForDoor(direction) === false) return;
+    if (checkForDoor(direction) === false && direction !== "teleport") return;
+    if (activeBoard !== players[activePlayerIndex].level) return;
     if (direction === "up" || direction === "down") {
       playerRefs.current[activePlayerIndex].row = newPlace;
     } else if (direction === "right" || direction === "left") {
       playerRefs.current[activePlayerIndex].column = newPlace;
+    } else if (direction === "teleport") {
+      playerRefs.current[activePlayerIndex].row = newPlace[0];
+      playerRefs.current[activePlayerIndex].column = newPlace[1];
+      playerRefs.current[activePlayerIndex].level = level;
     }
     const tileId = await checkForTile(
       playerRefs.current[activePlayerIndex].row,
@@ -82,6 +95,7 @@ export default function Game() {
           return {
             ...player,
             tileId: (playerRefs.current[activePlayerIndex].tileId = tileId),
+            level: playerRefs.current[activePlayerIndex].level,
             row: playerRefs.current[activePlayerIndex].row,
             column: playerRefs.current[activePlayerIndex].column,
           };
@@ -95,24 +109,17 @@ export default function Game() {
     if (!currentTile.leadsTo) return;
     const newTile = tilesData.find((tile) => tile.id === currentTile.leadsTo);
     if (newTile.row) {
-      setPlayers((prev) => {
-        return prev.map((player, index) => {
-          if (index === activePlayerIndex) {
-            return {
-              ...player,
-              tileId: newTile.id,
-              row: newTile.row,
-              column: newTile.col,
-            };
-          }
-          return player;
-        });
-      });
+      const row = newTile.row;
+      const column = newTile.col;
+      const floor = newTile.level;
+      handlePlayerMove([row, column], "teleport", floor);
     }
   }
 
   function checkForDoor(direction) {
-    const doors = tilesData.find((tile) => tile.id === playerRefs.current[activePlayerIndex].tileId).doors;
+    const doors = tilesData.find((tile) => {
+      return tile.id === playerRefs.current[activePlayerIndex].tileId;
+    }).doors;
     return doors.includes(direction);
   }
 
@@ -125,7 +132,7 @@ export default function Game() {
         const tileId = await getNewTile(row, column, floor);
         resolve(tileId);
       } else {
-        if (checkDoorAlignment(existingTile.id, direction) === false) resolve(false);
+        if (checkDoorAlignment(existingTile.id, direction) === false && direction !== "teleport") resolve(false);
         resolve(existingTile.id);
       }
     });

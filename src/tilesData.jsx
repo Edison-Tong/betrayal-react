@@ -145,7 +145,6 @@ let tilesData = [
     message: `If you end your tur on this tile, make a speed roll. <br>
                             5+: Nothing happens. <br>
                             4-0: Place your explorer on the Basement Landing and take one die of Physical damage`,
-    leadsTo: "basement-landing",
   },
   {
     id: "conservatory",
