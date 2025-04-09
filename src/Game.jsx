@@ -26,7 +26,7 @@ export default function Game() {
 
   useEffect(() => {
     function test() {
-      if (event.key === "q") console.log(players[activePlayerIndex]);
+      if (event.key === "q") console.log(players[activePlayerIndex], playerRefs.current[activePlayerIndex]);
     }
     window.addEventListener("keydown", test);
     return () => window.removeEventListener("keydown", test);
@@ -112,6 +112,7 @@ export default function Game() {
       const row = newTile.row;
       const column = newTile.col;
       const floor = newTile.level;
+      setActiveBoard(floor);
       handlePlayerMove([row, column], "teleport", floor);
     }
   }
@@ -125,14 +126,17 @@ export default function Game() {
 
   function checkForTile(row, column, floor, direction) {
     return new Promise(async (resolve) => {
-      const existingTile = tilesData.find(
-        (tile) => tile.floors[floor] === true && tile.row === row && tile.col === column
-      );
+      const existingTile = tilesData.find((tile) => tile.level === floor && tile.row === row && tile.col === column);
       if (!existingTile) {
         const tileId = await getNewTile(row, column, floor);
         resolve(tileId);
       } else {
-        if (checkDoorAlignment(existingTile.id, direction) === false && direction !== "teleport") resolve(false);
+        if (checkDoorAlignment(existingTile.id, direction) === false && direction !== "teleport") {
+          playerRefs.current[activePlayerIndex].row = players[activePlayerIndex].row;
+          playerRefs.current[activePlayerIndex].column = players[activePlayerIndex].column;
+          playerRefs.current[activePlayerIndex].level = players[activePlayerIndex].level;
+          resolve(false);
+        }
         resolve(existingTile.id);
       }
     });
