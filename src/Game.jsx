@@ -324,6 +324,13 @@ export default function Game() {
         <div className="turn-indicator">
           {players[activePlayerIndex].name}'s turn
         </div>
+        <div>
+          {
+            tilesData.find(
+              (tile) => tile.id === players[activePlayerIndex].tileId
+            ).message
+          }
+        </div>
         <button
           className="lvl-btn"
           id={`${activeBoard === "upper" ? "current" : ""}`}

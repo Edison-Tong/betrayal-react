@@ -9,7 +9,7 @@ let tilesData = [
     row: 3,
     col: 3,
     level: "basement",
-    message: "none",
+    // message: "none",
   },
   {
     id: "entrance-hall",
@@ -21,7 +21,7 @@ let tilesData = [
     row: 4,
     col: 3,
     level: "ground",
-    message: "none",
+    // message: "none",
   },
   {
     id: "hallway",
@@ -33,7 +33,7 @@ let tilesData = [
     row: 3,
     col: 3,
     level: "ground",
-    message: `Leads to the Secret Stairs`,
+    message: "Leads to the Secret Stairs",
     leadsTo: "secret-staircase",
   },
   {
@@ -70,9 +70,7 @@ let tilesData = [
     doors: ["up", "right"],
     image: "/images/armory.png",
     symbol: "none",
-    message: `When you discover this tile,
-                            reveal cards from the top of the item deck until you reveal a weapon. <br>
-                                Take it and bury the rest`,
+    message: `When you discover this tile, reveal cards from the top of the item deck until you reveal a weapon. <br> Take it and bury the rest`,
   },
   {
     id: "ballroom",
@@ -82,7 +80,7 @@ let tilesData = [
     doors: ["up", "right", "down", "left"],
     image: "/images/ballroom.png",
     symbol: "omen",
-    message: "none",
+    // message: "none",
   },
   {
     id: "bloody-room",
@@ -92,7 +90,7 @@ let tilesData = [
     doors: ["up", "right"],
     image: "/images/bloody-room.png",
     symbol: "item",
-    message: "none",
+    // message: "none",
   },
   {
     id: "catacombs",
@@ -102,7 +100,7 @@ let tilesData = [
     doors: ["up", "right", "down", "left"],
     image: "/images/catacombs.png",
     symbol: "omen",
-    message: "none",
+    // message: "none",
   },
   {
     id: "chapel",
@@ -122,7 +120,7 @@ let tilesData = [
     doors: ["up", "right"],
     image: "/images/charred-room.png",
     symbol: "omen",
-    message: "none",
+    // message: "none",
   },
   {
     id: "chasm",
@@ -132,7 +130,7 @@ let tilesData = [
     doors: ["up", "down"],
     image: "/images/chasm.png",
     symbol: "event",
-    message: "none",
+    // message: "none",
   },
   {
     id: "collapsed-room",
@@ -154,7 +152,7 @@ let tilesData = [
     doors: ["up", "down"],
     image: "/images/conservatory.png",
     symbol: "item",
-    message: "none",
+    // message: "none",
   },
   {
     id: "cramped-passageway",
@@ -164,7 +162,7 @@ let tilesData = [
     doors: ["up", "right", "down", "left"],
     image: "/images/cramped-passageway.png",
     symbol: "event",
-    message: "none",
+    // message: "none",
   },
   {
     id: "crawlspace",
@@ -174,7 +172,7 @@ let tilesData = [
     doors: ["up", "right", "left"],
     image: "/images/crawlspace.png",
     symbol: "event",
-    message: "none",
+    // message: "none",
   },
   {
     id: "dining-room",
@@ -184,7 +182,7 @@ let tilesData = [
     doors: ["up", "right", "down", "left"],
     image: "/images/dining-room.png",
     symbol: "event",
-    message: "none",
+    // message: "none",
   },
   {
     id: "furnace-room",
@@ -215,7 +213,7 @@ let tilesData = [
     doors: ["up", "right", "down", "left"],
     image: "/images/game-room.png",
     symbol: "item",
-    message: "none",
+    // message: "none",
   },
   {
     id: "graveyard",
@@ -236,7 +234,7 @@ let tilesData = [
     doors: ["up", "right"],
     image: "/images/guest-quarters.png",
     symbol: "event",
-    message: "none",
+    // message: "none",
   },
   {
     id: "gymnasium",
@@ -266,7 +264,7 @@ let tilesData = [
     doors: ["up", "down"],
     image: "/images/kitchen.png",
     symbol: "event",
-    message: "none",
+    // message: "none",
   },
   {
     id: "laboratory",
@@ -276,7 +274,7 @@ let tilesData = [
     doors: ["up", "right"],
     image: "/images/laboratory.png",
     symbol: "event",
-    message: "none",
+    // message: "none",
   },
   {
     id: "larder",
@@ -333,7 +331,7 @@ let tilesData = [
     doors: ["up", "right"],
     image: "/images/nursery.png",
     symbol: "omen",
-    message: "none",
+    // message: "none",
   },
   {
     id: "observatory",
@@ -343,7 +341,7 @@ let tilesData = [
     doors: ["up", "right", "down"],
     image: "/images/observatory.png",
     symbol: "omen",
-    message: "none",
+    // message: "none",
   },
   {
     id: "operating-theatre",
@@ -353,7 +351,7 @@ let tilesData = [
     doors: ["up", "right"],
     image: "/images/operating-theatre.png",
     symbol: "item",
-    message: "none",
+    // message: "none",
   },
   {
     id: "organ-room",
@@ -363,7 +361,7 @@ let tilesData = [
     doors: ["right", "down"],
     image: "/images/organ-room.png",
     symbol: "event",
-    message: "none",
+    // message: "none",
   },
   {
     id: "panic-room",
@@ -383,7 +381,7 @@ let tilesData = [
     doors: ["up", "right", "down"],
     image: "/images/primary-bedroom.png",
     symbol: "omen",
-    message: "none",
+    // message: "none",
   },
   {
     id: "ritual-room",
@@ -393,7 +391,7 @@ let tilesData = [
     doors: ["up", "right"],
     image: "/images/ritual-room.png",
     symbol: "omen",
-    message: "none",
+    // message: "none",
   },
   {
     id: "salon",
@@ -403,7 +401,7 @@ let tilesData = [
     doors: ["up", "right"],
     image: "/images/salon.png",
     symbol: "event",
-    message: "none",
+    // message: "none",
   },
   {
     id: "secret-staircase",
@@ -424,7 +422,7 @@ let tilesData = [
     doors: ["up", "right", "down"],
     image: "/images/soundproofed-room.png",
     symbol: "omen",
-    message: "none",
+    // message: "none",
   },
   {
     id: "specimen-room",
@@ -434,7 +432,7 @@ let tilesData = [
     doors: ["right", "left"],
     image: "/images/specimen-room.png",
     symbol: "omen",
-    message: "none",
+    // message: "none",
   },
   {
     id: "statuary-corridor",
@@ -444,7 +442,7 @@ let tilesData = [
     doors: ["up", "down"],
     image: "/images/statuary-corridor.png",
     symbol: "event",
-    message: "none",
+    // message: "none",
   },
   {
     id: "tower",
@@ -454,7 +452,7 @@ let tilesData = [
     doors: ["up", "down"],
     image: "/images/tower.png",
     symbol: "event",
-    message: "none",
+    // message: "none",
   },
   {
     id: "underground-cavern",
@@ -475,7 +473,7 @@ let tilesData = [
     doors: ["up", "right"],
     image: "/images/underground-lake.png",
     symbol: "event",
-    message: "none",
+    // message: "none",
   },
   {
     id: "vault",
@@ -485,7 +483,7 @@ let tilesData = [
     doors: ["up"],
     image: "/images/vault.png",
     symbol: "item",
-    message: "none",
+    // message: "none",
   },
   {
     id: "winter-bedroom",
@@ -495,7 +493,7 @@ let tilesData = [
     doors: ["up", "right"],
     image: "/images/winter-bedroom.png",
     symbol: "omen",
-    message: "none",
+    // message: "none",
   },
 ];
 
