@@ -14,19 +14,65 @@ export default function Game() {
   const tileRefs = useRef({});
 
   let [players, setPlayers] = useState([
-    { id: 1, name: "Player 1", tileId: "entrance-hall", level: "ground", row: 4, column: 3 },
-    { id: 2, name: "Player 2", tileId: "entrance-hall", level: "ground", row: 4, column: 3 },
-    { id: 3, name: "Player 3", tileId: "entrance-hall", level: "ground", row: 4, column: 3 },
-    { id: 4, name: "Player 4", tileId: "entrance-hall", level: "ground", row: 4, column: 3 },
-    { id: 5, name: "Player 5", tileId: "entrance-hall", level: "ground", row: 4, column: 3 },
-    { id: 6, name: "Player 6", tileId: "entrance-hall", level: "ground", row: 4, column: 3 },
+    {
+      id: 1,
+      name: "Player 1",
+      tileId: "entrance-hall",
+      level: "ground",
+      row: 4,
+      column: 3,
+    },
+    {
+      id: 2,
+      name: "Player 2",
+      tileId: "entrance-hall",
+      level: "ground",
+      row: 4,
+      column: 3,
+    },
+    {
+      id: 3,
+      name: "Player 3",
+      tileId: "entrance-hall",
+      level: "ground",
+      row: 4,
+      column: 3,
+    },
+    {
+      id: 4,
+      name: "Player 4",
+      tileId: "entrance-hall",
+      level: "ground",
+      row: 4,
+      column: 3,
+    },
+    {
+      id: 5,
+      name: "Player 5",
+      tileId: "entrance-hall",
+      level: "ground",
+      row: 4,
+      column: 3,
+    },
+    {
+      id: 6,
+      name: "Player 6",
+      tileId: "entrance-hall",
+      level: "ground",
+      row: 4,
+      column: 3,
+    },
   ]);
   let playerRefs = useRef(players);
   let [activePlayerIndex, setActivePlayerIndex] = useState(0);
 
   useEffect(() => {
     function test() {
-      if (event.key === "q") console.log(players[activePlayerIndex], playerRefs.current[activePlayerIndex]);
+      if (event.key === "q")
+        console.log(
+          players[activePlayerIndex],
+          playerRefs.current[activePlayerIndex]
+        );
     }
     window.addEventListener("keydown", test);
     return () => window.removeEventListener("keydown", test);
@@ -36,7 +82,9 @@ export default function Game() {
     const getDirection = (event) => {
       let newRow = players[activePlayerIndex].row;
       let newColumn = players[activePlayerIndex].column;
-      let tile = tilesData.find((tile) => tile.id === players[activePlayerIndex].tileId);
+      let tile = tilesData.find(
+        (tile) => tile.id === players[activePlayerIndex].tileId
+      );
       switch (event.key) {
         case "ArrowUp":
           newRow--;
@@ -126,15 +174,24 @@ export default function Game() {
 
   function checkForTile(row, column, floor, direction) {
     return new Promise(async (resolve) => {
-      const existingTile = tilesData.find((tile) => tile.level === floor && tile.row === row && tile.col === column);
+      const existingTile = tilesData.find(
+        (tile) =>
+          tile.level === floor && tile.row === row && tile.col === column
+      );
       if (!existingTile) {
         const tileId = await getNewTile(row, column, floor);
         resolve(tileId);
       } else {
-        if (checkDoorAlignment(existingTile.id, direction) === false && direction !== "teleport") {
-          playerRefs.current[activePlayerIndex].row = players[activePlayerIndex].row;
-          playerRefs.current[activePlayerIndex].column = players[activePlayerIndex].column;
-          playerRefs.current[activePlayerIndex].level = players[activePlayerIndex].level;
+        if (
+          checkDoorAlignment(existingTile.id, direction) === false &&
+          direction !== "teleport"
+        ) {
+          playerRefs.current[activePlayerIndex].row =
+            players[activePlayerIndex].row;
+          playerRefs.current[activePlayerIndex].column =
+            players[activePlayerIndex].column;
+          playerRefs.current[activePlayerIndex].level =
+            players[activePlayerIndex].level;
           resolve(false);
         }
         resolve(existingTile.id);
@@ -194,8 +251,18 @@ export default function Game() {
   }
 
   function updateDoors(direction, newTile) {
-    const doorsRotateLeft = { left: "up", up: "right", right: "down", down: "left" };
-    const doorsRotateRight = { left: "down", down: "right", right: "up", up: "left" };
+    const doorsRotateLeft = {
+      left: "up",
+      up: "right",
+      right: "down",
+      down: "left",
+    };
+    const doorsRotateRight = {
+      left: "down",
+      down: "right",
+      right: "up",
+      up: "left",
+    };
     let tileInfo = tilesData.find((tile) => tile.id === newTile);
     let updatedDoors = [];
     let rotationMap = direction === "left" ? doorsRotateRight : doorsRotateLeft;
@@ -225,6 +292,11 @@ export default function Game() {
     }
   }
 
+  const withBlur = (handler) => (e) => {
+    e.currentTarget.blur();
+    handler(e);
+  };
+
   return (
     <div className="game-table">
       <Board
@@ -240,18 +312,29 @@ export default function Game() {
         tileRefs={tileRefs}
       />
       <Board
-        className={`board basement ${activeBoard !== "basement" ? "hidden" : ""}`}
+        className={`board basement ${
+          activeBoard !== "basement" ? "hidden" : ""
+        }`}
         tiles={tiles.basement}
         players={players}
         tileRefs={tileRefs}
       />
 
       <div className="side-panel">
-        <div className="turn-indicator">{players[activePlayerIndex].name}'s turn</div>
+        <div className="turn-indicator">
+          {players[activePlayerIndex].name}'s turn
+        </div>
+        <div>
+          {
+            tilesData.find(
+              (tile) => tile.id === players[activePlayerIndex].tileId
+            ).message
+          }
+        </div>
         <button
           className="lvl-btn"
           id={`${activeBoard === "upper" ? "current" : ""}`}
-          onClick={() => setActiveBoard("upper")}
+          onClick={withBlur(() => setActiveBoard("upper"))}
         >
           Upper
         </button>
@@ -269,7 +352,7 @@ export default function Game() {
         >
           Basement
         </button>
-        <button onClick={() => endTurn()}>End Turn</button>
+        <button onClick={withBlur(() => endTurn())}>End Turn</button>
       </div>
     </div>
   );
