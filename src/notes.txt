@@ -1,0 +1,55 @@
+const tileEffects = {
+  "collapsed-room": {
+    effect: ({ handlePlayerMove, setActiveBoard, activePlayer, tilesData }) => {
+      console.log("Collapsed Room triggered!");
+
+      const roll = Math.floor(Math.random() * 6) + 1;
+      console.log(`Speed roll: ${roll}`);
+
+      if (roll < 5) {
+        const landingTile = tilesData.find(tile => tile.id === "basement-landing");
+        if (landingTile) {
+          setActiveBoard("basement");
+          handlePlayerMove([landingTile.row, landingTile.col], "teleport", "basement");
+        }
+      } else {
+        console.log("Nothing happens.");
+      }
+    },
+  },
+
+  "some-other-tile": {
+    effect: ({ drawItemCard }) => {
+      console.log("Other tile triggered!");
+      drawItemCard(); // Only this tile cares about this function
+    },
+  },
+
+  "simple-message-tile": {
+    effect: () => {
+      alert("This tile just gives you a message.");
+    },
+  },
+};
+
+export default tileEffects;
+
+
+
+
+
+const effectContext = {
+  handlePlayerMove,
+  setActiveBoard,
+  activePlayer: players[activePlayerIndex],
+  tilesData,
+  drawItemCard,
+  // Add other global functions as needed
+};
+
+const currentTile = tilesData.find(tile => tile.id === player.tileId);
+const tileEffect = tileEffects[currentTile.id]?.effect;
+
+if (tileEffect) {
+  tileEffect(effectContext); // Only uses what it needs
+}

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import Board from "./Board";
 import tilesData from "./tilesData";
+import tileEffects from "./TileEffects";
 
 export default function Game() {
   const isRotating = useRef(false);
@@ -68,11 +69,7 @@ export default function Game() {
 
   useEffect(() => {
     function test() {
-      if (event.key === "q")
-        console.log(
-          players[activePlayerIndex],
-          playerRefs.current[activePlayerIndex]
-        );
+      if (event.key === "q") console.log(players[activePlayerIndex], playerRefs.current[activePlayerIndex]);
     }
     window.addEventListener("keydown", test);
     return () => window.removeEventListener("keydown", test);
@@ -82,9 +79,7 @@ export default function Game() {
     const getDirection = (event) => {
       let newRow = players[activePlayerIndex].row;
       let newColumn = players[activePlayerIndex].column;
-      let tile = tilesData.find(
-        (tile) => tile.id === players[activePlayerIndex].tileId
-      );
+      let tile = tilesData.find((tile) => tile.id === players[activePlayerIndex].tileId);
       switch (event.key) {
         case "ArrowUp":
           newRow--;
@@ -174,24 +169,15 @@ export default function Game() {
 
   function checkForTile(row, column, floor, direction) {
     return new Promise(async (resolve) => {
-      const existingTile = tilesData.find(
-        (tile) =>
-          tile.level === floor && tile.row === row && tile.col === column
-      );
+      const existingTile = tilesData.find((tile) => tile.level === floor && tile.row === row && tile.col === column);
       if (!existingTile) {
         const tileId = await getNewTile(row, column, floor);
         resolve(tileId);
       } else {
-        if (
-          checkDoorAlignment(existingTile.id, direction) === false &&
-          direction !== "teleport"
-        ) {
-          playerRefs.current[activePlayerIndex].row =
-            players[activePlayerIndex].row;
-          playerRefs.current[activePlayerIndex].column =
-            players[activePlayerIndex].column;
-          playerRefs.current[activePlayerIndex].level =
-            players[activePlayerIndex].level;
+        if (checkDoorAlignment(existingTile.id, direction) === false && direction !== "teleport") {
+          playerRefs.current[activePlayerIndex].row = players[activePlayerIndex].row;
+          playerRefs.current[activePlayerIndex].column = players[activePlayerIndex].column;
+          playerRefs.current[activePlayerIndex].level = players[activePlayerIndex].level;
           resolve(false);
         }
         resolve(existingTile.id);
@@ -284,12 +270,17 @@ export default function Game() {
   }
 
   function endTurn() {
+    triggerTileEffect();
     const index = activePlayerIndex;
     if (activePlayerIndex === players.length - 1) {
       setActivePlayerIndex(0);
     } else {
       setActivePlayerIndex((prev) => prev + 1);
     }
+  }
+
+  function triggerTileEffect() {
+    tileEffects[tilesData.find((tile) => tile.id === players[activePlayerIndex].tileId).effect].effect();
   }
 
   const withBlur = (handler) => (e) => {
@@ -312,25 +303,15 @@ export default function Game() {
         tileRefs={tileRefs}
       />
       <Board
-        className={`board basement ${
-          activeBoard !== "basement" ? "hidden" : ""
-        }`}
+        className={`board basement ${activeBoard !== "basement" ? "hidden" : ""}`}
         tiles={tiles.basement}
         players={players}
         tileRefs={tileRefs}
       />
 
       <div className="side-panel">
-        <div className="turn-indicator">
-          {players[activePlayerIndex].name}'s turn
-        </div>
-        <div>
-          {
-            tilesData.find(
-              (tile) => tile.id === players[activePlayerIndex].tileId
-            ).message
-          }
-        </div>
+        <div className="turn-indicator">{players[activePlayerIndex].name}'s turn</div>
+        <div>{tilesData.find((tile) => tile.id === players[activePlayerIndex].tileId).message}</div>
         <button
           className="lvl-btn"
           id={`${activeBoard === "upper" ? "current" : ""}`}
@@ -341,14 +322,14 @@ export default function Game() {
         <button
           className="lvl-btn"
           id={`${activeBoard === "ground" ? "current" : ""}`}
-          onClick={() => setActiveBoard("ground")}
+          onClick={withBlur(() => setActiveBoard("ground"))}
         >
           Ground
         </button>
         <button
           className="lvl-btn"
           id={`${activeBoard === "basement" ? "current" : ""}`}
-          onClick={() => setActiveBoard("basement")}
+          onClick={withBlur(() => setActiveBoard("basement"))}
         >
           Basement
         </button>

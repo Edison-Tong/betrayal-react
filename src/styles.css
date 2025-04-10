@@ -50,8 +50,11 @@ body {
 .side-panel {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   background-color: rgb(244, 208, 6);
-  padding: 20px;
+  padding: 5px;
+  width: 150px;
+  height: 90vh;
 }
 
 .turn-indicator {
