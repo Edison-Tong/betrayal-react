@@ -128,7 +128,12 @@ export default function Game() {
       playerRefs.current[activePlayerIndex].level,
       direction
     );
-    if (tileId === false) return;
+    if (tileId === false) {
+      playerRefs.current[activePlayerIndex].row = players[activePlayerIndex].row;
+      playerRefs.current[activePlayerIndex].column = players[activePlayerIndex].column;
+      playerRefs.current[activePlayerIndex].level = players[activePlayerIndex].level;
+      return;
+    }
     if (isRotating.current) {
       await handleRotateTile(tileId, direction);
     }
@@ -175,9 +180,6 @@ export default function Game() {
         resolve(tileId);
       } else {
         if (checkDoorAlignment(existingTile.id, direction) === false && direction !== "teleport") {
-          playerRefs.current[activePlayerIndex].row = players[activePlayerIndex].row;
-          playerRefs.current[activePlayerIndex].column = players[activePlayerIndex].column;
-          playerRefs.current[activePlayerIndex].level = players[activePlayerIndex].level;
           resolve(false);
         }
         resolve(existingTile.id);
@@ -190,6 +192,10 @@ export default function Game() {
       const availableTiles = tilesData.filter((tile) => {
         return tile.floors[floor] === true && tile.row === undefined;
       });
+      if (availableTiles.length === 0) {
+        resolve(false);
+        return;
+      }
       const index = Math.floor(Math.random() * availableTiles.length);
       availableTiles[index].row = row;
       availableTiles[index].col = column;
