@@ -143,7 +143,12 @@ let tilesData = [
     message: `If you end your tur on this tile, make a speed roll. <br>
                             5+: Nothing happens. <br>
                             4-0: Place your explorer on the Basement Landing and take one die of Physical damage`,
-    effect: "collapsedRoom",
+    leadsTo: "basement-landing",
+    effect: async ({ teleportToNewTile }) => {
+      console.log("test");
+      // actual index = 12
+      teleportToNewTile(tilesData[5], true);
+    },
   },
   // {
   //   id: "conservatory",

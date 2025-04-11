@@ -153,9 +153,11 @@ export default function Game() {
     });
   }
 
-  function teleportToNewTile(currentTile) {
-    if (!currentTile.leadsTo) return;
+  function teleportToNewTile(currentTile, endOfTurn) {
+    console.log(endOfTurn);
+    if (!currentTile.leadsTo && endOfTurn !== true) return;
     const newTile = tilesData.find((tile) => tile.id === currentTile.leadsTo);
+    console.log("test");
     if (newTile.row) {
       const row = newTile.row;
       const column = newTile.col;
@@ -230,6 +232,8 @@ export default function Game() {
           tileChild.style.transform = `rotate(${tileChildRotation}deg)`;
           updateDoors("right", tile.id);
         } else if (event.key === "Enter") {
+          event.stopPropagation(); // ✅ prevent bubbling
+          event.preventDefault(); // ✅ prevent default behavior
           if (checkDoorAlignment(tileName, direction)) {
             document.removeEventListener("keydown", rotateTile);
             isRotating.current = false;
@@ -286,7 +290,9 @@ export default function Game() {
   }
 
   function triggerTileEffect() {
-    tileEffects[tilesData.find((tile) => tile.id === players[activePlayerIndex].tileId).effect].effect();
+    if (tilesData.find((tile) => tile.id === players[activePlayerIndex].tileId).effect) {
+      tilesData.find((tile) => tile.id === players[activePlayerIndex].tileId).effect({ teleportToNewTile });
+    }
   }
 
   const withBlur = (handler) => (e) => {
